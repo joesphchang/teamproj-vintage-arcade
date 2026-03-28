@@ -1,4 +1,4 @@
-# Vintaage Arcade RESTful Web Services (Team Project)
+# Vintage Arcade RESTful Web Services (Team Project)
 --- 
 
 ## Overview 
