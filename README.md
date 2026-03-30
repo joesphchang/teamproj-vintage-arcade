@@ -42,6 +42,7 @@ The API provides capabilities for
 Represents a physical arcade location that contains multiple arcade cabinets.
 
 Property    	   |              Description      	                          |        Type / Format
+|---|---|---|
 venueId	        |              Unique identifier for the venue	            |         int
 name	           |              Name of the arcade	                         |         string
 location	       |              Physical address                            |         string
@@ -56,6 +57,7 @@ Cabinet
 Represents an arcade machine located at a venue.
 
 Property	            |         Description	                                     |  Type / Format
+|---|---|---|
 gameId	              |         Unique identifier for the game	                  |   int
 gameName	            |         Name of the arcade game	                         |   string
 manufacturer	        |         Company that made the game	                      |   string
@@ -71,6 +73,7 @@ Condition
 Represents the operational condition of an arcade cabinet.
 
 Property	            |         Description	                                       | Type / Format
+|---|---|---|
 conditionId	         |         Unique identifier for the condition	                | int
 status	              | Condition label (e.g., Excellent, Good, Fair, Out of Order)| 	string
 
@@ -82,6 +85,7 @@ Manufacturer
 Provides additional information about companies that produce arcade machines.
 
 Property	             |         Description	                               |     Type / Format
+|---|---|---|
 manufacturerId	       |         Unique identifier for the manufacturer	    |      int
 name	                 |         Manufacturer name	                         |      string
 country	              |         Country of origin	                         |      string
