@@ -23,13 +23,77 @@ The Service provides the following:
 * Removes a venue and its associated cabinets along with it
 * Removes a cabinet within a venue
 
+
+The Arcades API is a RESTful web service designed to allow users and developers to access, manage, and discover information about arcade venues and their game cabinets. The API will provide structured, easy to use endpoint  that expose venue and arcade cabinet data. This service can be used by developers to create applications, such as arcade discovery websites, mobile apps, or game rental management systems. The service will be designed using Java and Maven following RESTful principles, with JSON as the primary data exchange format. This ensures that developers outside the team can easily consume the API in their own applications. 
+
+ 
+
+The API provides capabilities for 
+1. Viewing Venues – Retrieve a list of arcade venues including name, location, opening and closing times, and the games available.
+2. Viewing Arcade Cabinets – Access detailed information about individual games, including manufacturer, year of release, condition, and price per play.
+3. Searching and Filtering – Filter venues by location or operating hours, and search for games by name, manufacturer, year, or condition.
+4. Managing Data – Allow administrative users to add new venues, update existing arcade cabinets, or remove outdated data. 
 --- 
 
-## Resources
+## Resources (Entities)
 
-### Venue 
+### Venue
 
-### Cabinets 
+Represents a physical arcade location that contains multiple arcade cabinets.
+
+Property    	                 Description      	                                  Type / Format
+venueId	                      Unique identifier for the venue	                     int
+name	                         Name of the arcade	                                  string
+location	                     Physical address                                     string
+openFrom	                     Opening time (HH:mm)	                                string
+openTo	                       Closing time (HH:mm)	                                string
+cabinets	                     List of arcade cabinets at the venue	                list
+
+
+
+Cabinet
+
+Represents an arcade machine located at a venue.
+
+Property	                     Description	                                       Type / Format
+gameId	                       Unique identifier for the game	                     int
+gameName	                     Name of the arcade game	                            string
+manufacturer	                 Company that made the game	                         string
+year	                         Year the game was manufactured	                     int
+conditionId	                  Unique identifier for the condition	                int
+pricePerPlay	                 Cost to play the game once	                         double
+venueId	                      ID of the venue where the game is located	          int
+manufacturerId                (optional)	Unique identifier for the manufacturer	  int
+
+
+Condition
+
+Represents the operational condition of an arcade cabinet.
+
+Property	                     Description	                                        Type / Format
+conditionId	                  Unique identifier for the condition	                int
+status	                       Condition label (e.g., Excellent, Good, Fair, Out of Order)	string
+
+
+Optional Supporting Resources
+
+Manufacturer
+
+Provides additional information about companies that produce arcade machines.
+
+Property	                      Description	                                    Type / Format
+manufacturerId	                Unique identifier for the manufacturer	          int
+name	                          Manufacturer name	                               string
+country	                       Country of origin	                               string
+foundedYear	                   Year the company was founded	                    int
+
+
+
+Resource Relationships
+1. A Venue can contain many Cabinets.
+2. Each Cabinet belongs to one Venue.
+3. Each Cabinet has one Condition.
+4. A Cabinet may optionally reference a Manufacturer.
 
 
 
