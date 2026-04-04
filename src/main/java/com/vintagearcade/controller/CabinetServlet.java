@@ -71,7 +71,7 @@ public class CabinetServlet extends HttpServlet {
 
         int venueId = Integer.parseInt(request.getParameter("venueId"));
 
-        ((CabinetDao) cabinetDao).createWithVenue(cabinet, venueId);
+        ((CabinetDao) cabinetDao).create(cabinet, venueId);
 
         response.setStatus(HttpServletResponse.SC_CREATED);
     }
@@ -87,7 +87,7 @@ public class CabinetServlet extends HttpServlet {
         Cabinet cabinet = mapper.readValue(request.getReader(), Cabinet.class);
         cabinet.setGameId(id);
 
-        ((CabinetDao) cabinetDao).updateWithVenue(cabinet, venueId);
+        ((CabinetDao) cabinetDao).update(cabinet, venueId);
 
         response.setStatus(HttpServletResponse.SC_OK);
     }
