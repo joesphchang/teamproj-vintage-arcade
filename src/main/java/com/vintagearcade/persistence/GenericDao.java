@@ -13,7 +13,7 @@ import org.hibernate.query.criteria.HibernateCriteriaBuilder;
 import java.util.List;
 
 /**
- * The type Generic dao.
+ * The type Generic.
  *
  * @param <T> the type parameter
  */
