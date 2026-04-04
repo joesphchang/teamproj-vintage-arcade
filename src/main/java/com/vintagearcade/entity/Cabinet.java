@@ -21,11 +21,11 @@ public class Cabinet {
 
     private double pricePerPlay;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "manufacturerId")
     private Manufacturer manufacturer;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "conditionId")
     private GameCondition condition;
 

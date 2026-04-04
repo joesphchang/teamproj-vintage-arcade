@@ -1,3 +1,14 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- Clear tables in the correct order
+TRUNCATE TABLE VenueCabinet;
+TRUNCATE TABLE Cabinet;
+TRUNCATE TABLE Venue;
+TRUNCATE TABLE Manufacturer;
+TRUNCATE TABLE GameCondition;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
 INSERT INTO GameCondition (status) VALUES
 ('Excellent'),
 ('Good'),
