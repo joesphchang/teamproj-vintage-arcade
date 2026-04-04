@@ -27,32 +27,11 @@ public class CabinetServlet extends HttpServlet {
         response.setContentType("application/json");
 
         String idParam = request.getParameter("id");
-        String manufacturer = request.getParameter("manufacturer");
-        String condition = request.getParameter("condition");
-        String yearParam = request.getParameter("year");
-        String venueIdParam = request.getParameter("venueId");
 
         // GET by id
         if (idParam != null) {
             Cabinet cabinet = cabinetDao.getById(Integer.parseInt(idParam));
             mapper.writeValue(response.getWriter(), cabinet);
-            return;
-        }
-
-        if (venueIdParam != null) {
-            int venueId = Integer.parseInt(venueIdParam);
-            List<Cabinet> cabinets = ((GenericDao) cabinetDao).getByVenue(venueId);
-            mapper.writeValue(response.getWriter(), cabinets);
-            return;
-        }
-
-        // Filtering
-        if (manufacturer != null || condition != null || yearParam != null) {
-            Integer year = (yearParam != null) ? Integer.parseInt(yearParam) : null;
-
-            List<Cabinet> filtered = cabinetDao.filter(manufacturer, condition, year);
-
-            mapper.writeValue(response.getWriter(), filtered);
             return;
         }
 
