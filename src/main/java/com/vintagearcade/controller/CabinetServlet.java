@@ -1,7 +1,6 @@
 package com.vintagearcade.controller;
 
 import com.vintagearcade.entity.Cabinet;
-import com.vintagearcade.persistence.CabinetDao;
 import com.vintagearcade.persistence.GenericDao;
 
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +16,7 @@ import java.io.IOException;
 @WebServlet("/cabinets")
 public class CabinetServlet extends HttpServlet {
 
-    private GenericDao<Cabinet, Integer> cabinetDao = new CabinetDao();
+    private GenericDao<Cabinet> cabinetDao = new GenericDao<>(Cabinet.class);
     private ObjectMapper mapper = new ObjectMapper();
 
     // GET
@@ -42,7 +41,7 @@ public class CabinetServlet extends HttpServlet {
 
         if (venueIdParam != null) {
             int venueId = Integer.parseInt(venueIdParam);
-            List<Cabinet> cabinets = ((CabinetDao) cabinetDao).getByVenue(venueId);
+            List<Cabinet> cabinets = ((GenericDao) cabinetDao).getByVenue(venueId);
             mapper.writeValue(response.getWriter(), cabinets);
             return;
         }
@@ -69,9 +68,7 @@ public class CabinetServlet extends HttpServlet {
 
         Cabinet cabinet = mapper.readValue(request.getReader(), Cabinet.class);
 
-        int venueId = Integer.parseInt(request.getParameter("venueId"));
-
-        ((CabinetDao) cabinetDao).create(cabinet, venueId);
+        cabinetDao.insert(cabinet);
 
         response.setStatus(HttpServletResponse.SC_CREATED);
     }
@@ -82,12 +79,11 @@ public class CabinetServlet extends HttpServlet {
             throws IOException {
 
         int id = Integer.parseInt(request.getParameter("id"));
-        int venueId = Integer.parseInt(request.getParameter("venueId"));
 
         Cabinet cabinet = mapper.readValue(request.getReader(), Cabinet.class);
         cabinet.setGameId(id);
 
-        ((CabinetDao) cabinetDao).update(cabinet, venueId);
+        cabinetDao.update(cabinet);
 
         response.setStatus(HttpServletResponse.SC_OK);
     }
@@ -97,9 +93,9 @@ public class CabinetServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
-        int id = Integer.parseInt(request.getParameter("id"));
+        Cabinet cabinet = mapper.readValue(request.getReader(), Cabinet.class);
 
-        cabinetDao.delete(id);
+        cabinetDao.delete(cabinet);
 
         response.setStatus(HttpServletResponse.SC_NO_CONTENT);
     }
