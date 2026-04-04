@@ -21,7 +21,7 @@ public class Cabinet {
 
     private double pricePerPlay;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "manufacturerId")
     private Manufacturer manufacturer;
 

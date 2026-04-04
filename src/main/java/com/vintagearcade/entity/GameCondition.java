@@ -18,7 +18,7 @@ public class GameCondition {
 
     private String status;
 
-    @OneToMany(mappedBy = "condition")
+    @OneToMany(mappedBy = "condition", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Cabinet> cabinets =  new HashSet<>();
 
     /**
