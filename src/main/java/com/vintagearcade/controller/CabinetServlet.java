@@ -31,11 +31,19 @@ public class CabinetServlet extends HttpServlet {
         String manufacturer = request.getParameter("manufacturer");
         String condition = request.getParameter("condition");
         String yearParam = request.getParameter("year");
+        String venueIdParam = request.getParameter("venueId");
 
         // GET by id
         if (idParam != null) {
             Cabinet cabinet = cabinetDao.getById(Integer.parseInt(idParam));
             mapper.writeValue(response.getWriter(), cabinet);
+            return;
+        }
+
+        if (venueIdParam != null) {
+            int venueId = Integer.parseInt(venueIdParam);
+            List<Cabinet> cabinets = ((CabinetDao) cabinetDao).getByVenue(venueId);
+            mapper.writeValue(response.getWriter(), cabinets);
             return;
         }
 
@@ -60,7 +68,11 @@ public class CabinetServlet extends HttpServlet {
             throws IOException {
 
         Cabinet cabinet = mapper.readValue(request.getReader(), Cabinet.class);
-        cabinetDao.create(cabinet);
+
+        int venueId = Integer.parseInt(request.getParameter("venueId"));
+
+        ((CabinetDao) cabinetDao).createWithVenue(cabinet, venueId);
+
         response.setStatus(HttpServletResponse.SC_CREATED);
     }
 
@@ -70,11 +82,12 @@ public class CabinetServlet extends HttpServlet {
             throws IOException {
 
         int id = Integer.parseInt(request.getParameter("id"));
+        int venueId = Integer.parseInt(request.getParameter("venueId"));
 
         Cabinet cabinet = mapper.readValue(request.getReader(), Cabinet.class);
         cabinet.setGameId(id);
 
-        cabinetDao.update(cabinet);
+        ((CabinetDao) cabinetDao).updateWithVenue(cabinet, venueId);
 
         response.setStatus(HttpServletResponse.SC_OK);
     }
