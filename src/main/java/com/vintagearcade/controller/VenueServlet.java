@@ -1,7 +1,6 @@
 package com.vintagearcade.controller;
 
 import com.vintagearcade.entity.Venue;
-import com.vintagearcade.persistence.VenueDao;
 import com.vintagearcade.persistence.GenericDao;
 
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +15,7 @@ import java.io.IOException;
 @WebServlet("/venues")
 public class VenueServlet extends HttpServlet {
 
-    private GenericDao<Venue, Integer> venueDao = new VenueDao();
+    private GenericDao<Venue> venueDao = new GenericDao<>(Venue.class);
     private ObjectMapper mapper = new ObjectMapper();
 
     // GET
@@ -43,7 +42,7 @@ public class VenueServlet extends HttpServlet {
             throws IOException {
 
         Venue venue = mapper.readValue(request.getReader(), Venue.class);
-        venueDao.create(venue);
+        venueDao.insert(venue);
 
         response.setStatus(HttpServletResponse.SC_CREATED);
 
@@ -70,8 +69,8 @@ public class VenueServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
-        int id = Integer.parseInt(request.getParameter("id"));
-        venueDao.delete(id);
+        Venue venue = mapper.readValue(request.getReader(), Venue.class);
+        venueDao.delete(venue);
 
         response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 
