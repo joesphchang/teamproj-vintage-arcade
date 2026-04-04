@@ -7,16 +7,25 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The type Manufacturer dao test.
+ */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ManufacturerDaoTest {
 
     private GenericDao<Manufacturer> manufacturerDao;
 
+    /**
+     * Sets .
+     */
     @BeforeAll
     void setup() {
         manufacturerDao = new GenericDao<>(Manufacturer.class);
     }
 
+    /**
+     * Test insert and get by id.
+     */
     @Test
     void testInsertAndGetById() {
         Manufacturer m = new Manufacturer("Namco", "Japan", 1955);
@@ -28,6 +37,9 @@ class ManufacturerDaoTest {
         assertEquals("Namco", retrieved.getName());
     }
 
+    /**
+     * Test update.
+     */
     @Test
     void testUpdate() {
         Manufacturer m = manufacturerDao.getAll().get(0);
@@ -38,6 +50,9 @@ class ManufacturerDaoTest {
         assertEquals("USA", updated.getCountry());
     }
 
+    /**
+     * Test delete.
+     */
     @Test
     void testDelete() {
         Manufacturer m = manufacturerDao.getAll().get(0);
@@ -47,12 +62,18 @@ class ManufacturerDaoTest {
         assertNull(deleted);
     }
 
+    /**
+     * Test get all.
+     */
     @Test
     void testGetAll() {
         List<Manufacturer> manufacturers = manufacturerDao.getAll();
         assertNotNull(manufacturers);
     }
 
+    /**
+     * Test get by property equal.
+     */
     @Test
     void testGetByPropertyEqual() {
         Manufacturer m = new Manufacturer("Equal Test", "Germany", 1980);
@@ -62,6 +83,9 @@ class ManufacturerDaoTest {
         assertFalse(results.isEmpty());
     }
 
+    /**
+     * Test get by property like.
+     */
     @Test
     void testGetByPropertyLike() {
         Manufacturer m = new Manufacturer("Like Test Corp", "France", 1990);

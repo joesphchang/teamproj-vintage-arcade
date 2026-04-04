@@ -7,16 +7,25 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The type Venue dao test.
+ */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class VenueDaoTest {
 
     private GenericDao<Venue> venueDao;
 
+    /**
+     * Sets .
+     */
     @BeforeAll
     void setup() {
         venueDao = new GenericDao<>(Venue.class);
     }
 
+    /**
+     * Test insert and get by id.
+     */
     @Test
     void testInsertAndGetById() {
         Venue venue = new Venue("Retro Arcade", "123 Main St");
@@ -28,6 +37,9 @@ class VenueDaoTest {
         assertEquals("Retro Arcade", retrieved.getName());
     }
 
+    /**
+     * Test update.
+     */
     @Test
     void testUpdate() {
         Venue venue = venueDao.getAll().get(0);
@@ -38,6 +50,9 @@ class VenueDaoTest {
         assertEquals("456 Elm St", updated.getLocation());
     }
 
+    /**
+     * Test delete.
+     */
     @Test
     void testDelete() {
         Venue venue = venueDao.getAll().get(0);
@@ -47,12 +62,18 @@ class VenueDaoTest {
         assertNull(deleted);
     }
 
+    /**
+     * Test get all.
+     */
     @Test
     void testGetAll() {
         List<Venue> venues = venueDao.getAll();
         assertNotNull(venues);
     }
 
+    /**
+     * Test get by property equal.
+     */
     @Test
     void testGetByPropertyEqual() {
         Venue venue = new Venue("Equal Test", "789 Oak St");
@@ -62,6 +83,9 @@ class VenueDaoTest {
         assertFalse(results.isEmpty());
     }
 
+    /**
+     * Test get by property like.
+     */
     @Test
     void testGetByPropertyLike() {
         Venue venue = new Venue("Like Test Arcade", "101 Pine St");

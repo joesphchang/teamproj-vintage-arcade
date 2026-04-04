@@ -9,16 +9,25 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The type Cabinet dao test.
+ */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class CabinetDaoTest {
 
     private GenericDao<Cabinet> cabinetDao;
 
+    /**
+     * Sets .
+     */
     @BeforeAll
     void setup() {
         cabinetDao = new GenericDao<>(Cabinet.class);
     }
 
+    /**
+     * Test insert and get by id.
+     */
     @Test
     void testInsertAndGetById() {
         Manufacturer manufacturer = new Manufacturer("Namco", "Japan", 1955);
@@ -34,6 +43,9 @@ class CabinetDaoTest {
         assertEquals("Pac-Man", retrieved.getGameName());
     }
 
+    /**
+     * Test update.
+     */
     @Test
     void testUpdate() {
         Cabinet cabinet = cabinetDao.getAll().get(0);
@@ -44,12 +56,18 @@ class CabinetDaoTest {
         assertEquals(0.5, updated.getPricePerPlay());
     }
 
+    /**
+     * Test get all.
+     */
     @Test
     void testGetAll() {
         List<Cabinet> cabinets = cabinetDao.getAll();
         assertFalse(cabinets.isEmpty());
     }
 
+    /**
+     * Test delete.
+     */
     @Test
     void testDelete() {
         Cabinet cabinet = cabinetDao.getAll().get(0);
