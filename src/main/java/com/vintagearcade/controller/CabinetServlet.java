@@ -154,6 +154,7 @@ public class CabinetServlet extends HttpServlet {
         }
     }
 
+    // Validation method
     private void validateCabinet(Cabinet cabinet) throws IllegalAccessException {
 
         // current year variable for year check

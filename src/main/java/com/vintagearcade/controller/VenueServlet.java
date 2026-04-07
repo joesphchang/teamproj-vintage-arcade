@@ -1,5 +1,6 @@
 package com.vintagearcade.controller;
 
+import com.vintagearcade.entity.Cabinet;
 import com.vintagearcade.entity.Venue;
 import com.vintagearcade.persistence.GenericDao;
 
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.time.LocalTime;
 
 @WebServlet("/venues")
 public class VenueServlet extends HttpServlet {
@@ -76,5 +78,33 @@ public class VenueServlet extends HttpServlet {
 
     }
 
+    // Validation method
+    private void validateVenue(Venue venue) throws IllegalAccessException {
+
+        // check if a venue's name was input
+        if (venue.getName() == null || venue.getName().isBlank()) {
+            throw new IllegalAccessException("Venue name is required");
+        }
+
+        // check if a venue's location was input
+        if (venue.getLocation() == null|| venue.getLocation().isBlank()) {
+            throw new IllegalAccessException("Venue location is required");
+        }
+
+        // check if a game's price to play is valid (above 0)
+        if (venue.getOpenFrom() == null) {
+            throw new IllegalAccessException("Opening time is required");
+        }
+
+        // check if manufacturer is provided
+        if (venue.getOpenTo() == null) {
+            throw new IllegalAccessException("Closing time is required");
+        }
+
+        // check if condition is provided
+        if (!venue.getOpenFrom().isBefore(venue.getOpenTo())) {
+            throw new IllegalAccessException("Opening time must be before closing time");
+        }
+    }
 
 }
