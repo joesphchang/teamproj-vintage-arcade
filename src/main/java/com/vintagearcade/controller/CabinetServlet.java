@@ -2,6 +2,7 @@ package com.vintagearcade.controller;
 
 import com.vintagearcade.entity.Cabinet;
 import com.vintagearcade.persistence.GenericDao;
+import com.vintagearcade.error.ApiError;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
 import java.io.IOException;
+import java.lang.IllegalAccessException;
 
 @WebServlet("/cabinets")
 public class CabinetServlet extends HttpServlet {
@@ -45,11 +47,25 @@ public class CabinetServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
-        Cabinet cabinet = mapper.readValue(request.getReader(), Cabinet.class);
+        response.setContentType("application/json");
 
-        cabinetDao.insert(cabinet);
+        try {
+            Cabinet cabinet = mapper.readValue(request.getReader(), Cabinet.class);
 
-        response.setStatus(HttpServletResponse.SC_CREATED);
+            validateCabinet(cabinet);
+
+            cabinetDao.insert(cabinet);
+
+            response.setStatus(HttpServletResponse.SC_CREATED);
+        } catch (IllegalArgumentException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            mapper.writeValue(response.getWriter(),
+                    new ApiError(400, e.getMessage()));
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            mapper.writeValue(response.getWriter(),
+                    new ApiError(500, "Server error"));
+        }
     }
 
     // PUT
@@ -77,6 +93,13 @@ public class CabinetServlet extends HttpServlet {
         cabinetDao.delete(cabinet);
 
         response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+    }
+
+    private void validateCabinet(Cabinet cabinet) throws IllegalAccessException {
+
+        if (cabinet.getGameName() == null || cabinet.getGameName().isBlank()) {
+            throw new IllegalAccessException("Game name is required");
+        }
     }
 
 }
