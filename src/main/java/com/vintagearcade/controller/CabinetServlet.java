@@ -52,8 +52,10 @@ public class CabinetServlet extends HttpServlet {
         try {
             Cabinet cabinet = mapper.readValue(request.getReader(), Cabinet.class);
 
+            // validate first
             validateCabinet(cabinet);
 
+            // then call DAO
             cabinetDao.insert(cabinet);
 
             response.setStatus(HttpServletResponse.SC_CREATED);
@@ -97,8 +99,32 @@ public class CabinetServlet extends HttpServlet {
 
     private void validateCabinet(Cabinet cabinet) throws IllegalAccessException {
 
+        // current year variable for year check
+        int currentYear = java.time.Year.now().getValue();
+
+        // check if a game's name was input
         if (cabinet.getGameName() == null || cabinet.getGameName().isBlank()) {
             throw new IllegalAccessException("Game name is required");
+        }
+
+        // check if a game's year is within the valid range
+        if (cabinet.getYear() < 1970 || cabinet.getYear() > currentYear) {
+            throw new IllegalAccessException("Year must be between 1970 and current year");
+        }
+
+        // check if a game's price to play is valid (above 0)
+        if (cabinet.getPricePerPlay() <= 0) {
+            throw new IllegalAccessException("Price must be greater than 0");
+        }
+
+        // check if manufacturer is provided
+        if (cabinet.getManufacturer() == null) {
+            throw new IllegalAccessException("Manufacturer is required");
+        }
+
+        // check if condition is provided
+        if (cabinet.getCondition() == null) {
+            throw new IllegalAccessException("Condition is required");
         }
     }
 
