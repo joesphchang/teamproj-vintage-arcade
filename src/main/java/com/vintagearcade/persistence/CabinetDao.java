@@ -12,8 +12,14 @@ import java.util.Set;
 
 import static com.vintagearcade.persistence.SessionFactoryProvider.getSessionFactory;
 
+/**
+ * The type Cabinet dao.
+ */
 public class CabinetDao extends GenericDao<Cabinet> {
 
+    /**
+     * Instantiates a new Cabinet dao.
+     */
     public CabinetDao() {
         super(Cabinet.class);
     }
@@ -22,6 +28,7 @@ public class CabinetDao extends GenericDao<Cabinet> {
      * Update a cabinet, ensuring all assigned venues are valid.
      *
      * @param cabinet the cabinet to update
+     * @return the boolean
      * @throws IllegalArgumentException if any assigned venue does not exist
      */
     public boolean updateCabinet(Cabinet cabinet) {
@@ -92,6 +99,12 @@ public class CabinetDao extends GenericDao<Cabinet> {
         session.close();
     }
 
+    /**
+     * Gets by id with venues.
+     *
+     * @param id the id
+     * @return the by id with venues
+     */
     public Cabinet getByIdWithVenues(int id) {
         Session session = getSessionFactory().openSession();
         try {

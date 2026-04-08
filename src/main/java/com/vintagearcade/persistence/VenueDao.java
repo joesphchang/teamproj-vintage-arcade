@@ -8,12 +8,23 @@ import org.hibernate.Transaction;
 
 import static com.vintagearcade.persistence.SessionFactoryProvider.getSessionFactory;
 
+/**
+ * The type Venue dao.
+ */
 public class VenueDao extends GenericDao<Venue> {
 
+    /**
+     * Instantiates a new Venue dao.
+     */
     public VenueDao() {
         super(Venue.class);
     }
 
+    /**
+     * Delete venue.
+     *
+     * @param venueId the venue id
+     */
     public void deleteVenue(int venueId) {
         Session session = getSessionFactory().openSession(); // use your session factory
         Transaction transaction = session.beginTransaction();
@@ -39,6 +50,12 @@ public class VenueDao extends GenericDao<Venue> {
         session.close();
     }
 
+    /**
+     * Gets by id with cabinets.
+     *
+     * @param id the id
+     * @return the by id with cabinets
+     */
     public Venue getByIdWithCabinets(int id) {
         Session session = getSessionFactory().openSession();
         try {

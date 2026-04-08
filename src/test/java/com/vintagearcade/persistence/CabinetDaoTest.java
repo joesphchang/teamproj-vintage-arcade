@@ -20,6 +20,9 @@ public class CabinetDaoTest {
     private CabinetDao cabinetDao;
     private VenueDao venueDao;
     private GenericDao<GameCondition> conditionDao;
+    /**
+     * The Manufacturer dao.
+     */
     GenericDao<Manufacturer> manufacturerDao;
 
 
@@ -58,6 +61,9 @@ public class CabinetDaoTest {
         return cabinet;
     }
 
+    /**
+     * Test insert and get by id.
+     */
     @Test
     void testInsertAndGetById() {
 
@@ -68,6 +74,9 @@ public class CabinetDaoTest {
         assertEquals("Test Game", retrieved.getGameName());
     }
 
+    /**
+     * Test update.
+     */
     @Test
     void testUpdate() {
 
@@ -81,6 +90,9 @@ public class CabinetDaoTest {
         assertEquals(0.5, updated.getPricePerPlay());
     }
 
+    /**
+     * Test get all.
+     */
     @Test
     void testGetAll() {
 
@@ -91,6 +103,9 @@ public class CabinetDaoTest {
         assertFalse(cabinets.isEmpty());
     }
 
+    /**
+     * Test delete.
+     */
     @Test
     void testDelete() {
 
@@ -103,6 +118,9 @@ public class CabinetDaoTest {
         assertNull(deleted);
     }
 
+    /**
+     * Test cabinet without venue.
+     */
     @Test
     void testCabinetWithoutVenue() {
 
@@ -113,6 +131,9 @@ public class CabinetDaoTest {
         assertNotNull(retrieved);
     }
 
+    /**
+     * Test update cabinet with invalid venue.
+     */
     @Test
     void testUpdateCabinetWithInvalidVenue() {
         Cabinet cabinet = createTestCabinet();
@@ -125,6 +146,10 @@ public class CabinetDaoTest {
             cabinetDao.updateCabinet(cabinet);
         });
     }
+
+    /**
+     * Test delete cabinet with linked venues.
+     */
     @Test
     void testDeleteCabinetWithLinkedVenues() {
         Cabinet cabinet = createTestCabinet();
@@ -156,6 +181,9 @@ public class CabinetDaoTest {
         assertTrue(stillExists.getCabinets().isEmpty());
     }
 
+    /**
+     * Test update cabinet with null venues.
+     */
     @Test
     void testUpdateCabinetWithNullVenues() {
         Cabinet cabinet = createTestCabinet();
@@ -169,6 +197,9 @@ public class CabinetDaoTest {
         assertTrue(updated.getVenues() == null || updated.getVenues().isEmpty());
     }
 
+    /**
+     * Test update cabinet with empty venues.
+     */
     @Test
     void testUpdateCabinetWithEmptyVenues() {
         Cabinet cabinet = createTestCabinet();

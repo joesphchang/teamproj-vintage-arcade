@@ -95,6 +95,9 @@ public class GameConditionDaoTest {
         assertFalse(results.isEmpty());
     }
 
+    /**
+     * Test get by invalid id.
+     */
     @Test
     void testGetByInvalidId() {
 
@@ -103,6 +106,9 @@ public class GameConditionDaoTest {
         assertNull(result);
     }
 
+    /**
+     * Test get by property equal empty result.
+     */
     @Test
     void testGetByPropertyEqualEmptyResult() {
 

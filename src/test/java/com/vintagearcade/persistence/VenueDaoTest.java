@@ -21,6 +21,9 @@ public class VenueDaoTest {
     private GenericDao<GameCondition> conditionDao;
     private GenericDao<Manufacturer> manufacturerDao;
 
+    /**
+     * Sets .
+     */
     @BeforeAll
     void setup() {
         cabinetDao = new CabinetDao();
@@ -50,6 +53,9 @@ public class VenueDaoTest {
         return cabinet;
     }
 
+    /**
+     * Test insert and get by id.
+     */
     @Test
     void testInsertAndGetById() {
 
@@ -61,6 +67,9 @@ public class VenueDaoTest {
         assertEquals("Retro Arcade", retrieved.getName());
     }
 
+    /**
+     * Test update.
+     */
     @Test
     void testUpdate() {
 
@@ -75,6 +84,9 @@ public class VenueDaoTest {
         assertEquals("New Address", updated.getLocation());
     }
 
+    /**
+     * Test delete.
+     */
     @Test
     void testDelete() {
 
@@ -88,6 +100,9 @@ public class VenueDaoTest {
         assertNull(deleted);
     }
 
+    /**
+     * Test get all.
+     */
     @Test
     void testGetAll() {
 
@@ -98,6 +113,9 @@ public class VenueDaoTest {
         assertFalse(venues.isEmpty());
     }
 
+    /**
+     * Test get by property equal.
+     */
     @Test
     void testGetByPropertyEqual() {
 
@@ -109,6 +127,9 @@ public class VenueDaoTest {
         assertFalse(results.isEmpty());
     }
 
+    /**
+     * Test get by property like.
+     */
     @Test
     void testGetByPropertyLike() {
 
@@ -120,6 +141,9 @@ public class VenueDaoTest {
         assertFalse(results.isEmpty());
     }
 
+    /**
+     * Test delete venue removes cabinet relationship.
+     */
     @Test
     void testDeleteVenueRemovesCabinetRelationship() {
 
@@ -140,6 +164,9 @@ public class VenueDaoTest {
         assertNull(deletedVenue);
     }
 
+    /**
+     * Test delete venue does not delete cabinets.
+     */
     @Test
     public void testDeleteVenueDoesNotDeleteCabinets() {
         Venue venue = new Venue("Test Venue", "Addr");
@@ -164,6 +191,9 @@ public class VenueDaoTest {
 
     }
 
+    /**
+     * Test delete venue with no cabinets.
+     */
     @Test
     void testDeleteVenueWithNoCabinets() {
         // Create a venue with no cabinets
