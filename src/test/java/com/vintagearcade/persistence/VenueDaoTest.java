@@ -163,4 +163,25 @@ public class VenueDaoTest {
         assertNotNull(stillExists);
 
     }
+
+    @Test
+    void testDeleteVenueWithNoCabinets() {
+        // Create a venue with no cabinets
+        Venue venue = new Venue("Solo Venue", "456 Lonely St");
+        venueDao.insert(venue);
+
+        int venueId = venue.getVenueId();
+
+        // Ensure it has no cabinets
+        Venue retrieved = venueDao.getByIdWithCabinets(venueId);
+        assertNotNull(retrieved);
+        assertTrue(retrieved.getCabinets().isEmpty(), "Venue should start with no cabinets");
+
+        // Delete the venue
+        venueDao.deleteVenue(venueId);
+
+        // Verify the venue is deleted
+        Venue deleted = venueDao.getById(venueId);
+        assertNull(deleted, "Venue should be deleted successfully");
+    }
 }
