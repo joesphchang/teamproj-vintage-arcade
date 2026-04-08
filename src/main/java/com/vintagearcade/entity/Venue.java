@@ -9,7 +9,10 @@ import java.util.Set;
  * The type Venue.
  */
 @Entity
-@Table(name = "Venue")
+@Table(
+    name = "Venue",
+    uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "location"})}
+)
 public class Venue {
 
     @Id
@@ -22,7 +25,7 @@ public class Venue {
     private LocalTime openFrom;
     private LocalTime openTo;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "VenueCabinet",
             joinColumns = @JoinColumn(name = "venueId"),
