@@ -140,6 +140,12 @@
       <artifactId>jersey-hk2</artifactId>
       <version>${jersey-version}</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.webjars.npm</groupId>
+      <artifactId>swagger-ui-dist</artifactId>
+      <version>4.18.3</version>
+    </dependency>
   </dependencies>
   <build>
     <finalName>teamproj-vintage-arcade</finalName>
