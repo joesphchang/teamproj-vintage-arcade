@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * The type Game condition dao test.
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class GameConditionDaoTest {
+public class GameConditionDaoTest {
 
     private GenericDao<GameCondition> conditionDao;
 
@@ -93,5 +93,28 @@ class GameConditionDaoTest {
 
         List<GameCondition> results = conditionDao.getByPropertyLike("status", "Like Test");
         assertFalse(results.isEmpty());
+    }
+
+    /**
+     * Test get by invalid id.
+     */
+    @Test
+    void testGetByInvalidId() {
+
+        GameCondition result = conditionDao.getById(-1);
+
+        assertNull(result);
+    }
+
+    /**
+     * Test get by property equal empty result.
+     */
+    @Test
+    void testGetByPropertyEqualEmptyResult() {
+
+        List<GameCondition> results =
+                conditionDao.getByPropertyEqual("status", "THIS_DOES_NOT_EXIST");
+
+        assertTrue(results.isEmpty());
     }
 }

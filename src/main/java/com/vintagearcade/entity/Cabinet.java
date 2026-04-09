@@ -2,13 +2,20 @@ package com.vintagearcade.entity;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
  * The type Cabinet.
  */
 @Entity
-@Table(name = "Cabinet")
+@Table(
+    name = "Cabinet",
+    uniqueConstraints = {
+@UniqueConstraint(columnNames = {"gameName", "year", "manufacturerId"})
+    }
+)
+
 public class Cabinet {
 
     @Id
@@ -21,16 +28,16 @@ public class Cabinet {
 
     private double pricePerPlay;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "manufacturerId")
     private Manufacturer manufacturer;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "conditionId")
     private GameCondition condition;
 
     @ManyToMany(mappedBy = "cabinets")
-    private Set<Venue> venues;
+    private Set<Venue> venues = new HashSet<>();
 
     /**
      * Instantiates a new Cabinet.
@@ -43,7 +50,7 @@ public class Cabinet {
         this.pricePerPlay = pricePerPlay;
         this.manufacturer = manufacturer;
         this.condition = condition;
-        this.venues = venues;
+        this.venues = (venues != null) ? venues : new HashSet<>();
     }
 
     // getters and setters
