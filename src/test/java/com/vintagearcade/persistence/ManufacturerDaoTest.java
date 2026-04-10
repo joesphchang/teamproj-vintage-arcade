@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * The type Manufacturer dao test.
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class ManufacturerDaoTest {
+public class ManufacturerDaoTest {
 
     private GenericDao<Manufacturer> manufacturerDao;
 
@@ -93,5 +93,28 @@ class ManufacturerDaoTest {
 
         List<Manufacturer> results = manufacturerDao.getByPropertyLike("name", "Like Test");
         assertFalse(results.isEmpty());
+    }
+
+    /**
+     * Test get by invalid id.
+     */
+    @Test
+    void testGetByInvalidId() {
+
+        Manufacturer result = manufacturerDao.getById(-1);
+
+        assertNull(result);
+    }
+
+    /**
+     * Test get by property equal empty result.
+     */
+    @Test
+    void testGetByPropertyEqualEmptyResult() {
+
+        List<Manufacturer> results =
+                manufacturerDao.getByPropertyEqual("name", "THIS_DOES_NOT_EXIST");
+
+        assertTrue(results.isEmpty());
     }
 }

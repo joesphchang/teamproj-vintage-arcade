@@ -3,71 +3,69 @@
 ## Week 9 [First Week]:
 
 1.) **Repo Setup**
-- [ ] GitHub Repo initiated
-- [ ] Contributors (team) added
-- [ ] README added
-- [ ] Add Team Repo link to Class Project list
+- [X] GitHub Repo initiated
+- [X] Contributors (team) added
+- [X] README added
+- [X] Add Team Repo link to Class Project list
 
 2.) **Problem/Solution/Plan Documentation**
-- [ ] Problem Statement
-- [ ] Solution Description
-- [ ] Project Plan
-- [ ] List of service resources and calls
+- [X] Problem Statement
+- [X] Solution Description
+- [X] Project Plan
+- [X] List of service resources and calls
 
 3.) **Team Charter/Ground Rules**
-- [ ] Establish common rules for team
-- [ ] Meeting time/dates
-- [ ] Work/submission plan
+- [X] Establish common rules for team
+- [X] Meeting time/dates
+- [X] Work/submission plan
 
 4.) **Choose and Setup Documentation Platform**
-- [ ] OneNote
+- [X] OneNote
 
 ---
 
 ## Week 10 [Second Week]:
 
 1.) **Data Model & Database Schema**
-- [ ] Confirm all entities
-    - [ ] Venue
-    - [ ] Cabinet
-    - [ ] Condition
-    - [ ] Manufacturer
-- [ ] Create ER diagram
-- [ ] Set up Database (MySQL)
-- [ ] Define relationships
-    - [ ] Ex. 1: Venue -> Cabinets (1 to many)
-    - [ ] Ex. 2: Cabinet -> Condition (Many to many)
+- [X] Confirm all entities
+    - [X] Venue
+    - [X] Cabinet
+    - [X] Condition
+    - [X] Manufacturer
+- [X] Create ER diagram
+- [X] Set up Database (MySQL)
+- [X] Define relationships
 
 2.) **Project Setup**
-- [ ] Initialize Project (Java/Maven/IntelliJ)
-- [ ] Set up package structure
-    - [ ] Controller
-    - [ ] Entity
-    - [ ] Dao
-- [ ] Configure dependencies
-    - [ ] JPA/Hibernate
+- [X] Initialize Project (Java/Maven/IntelliJ)
+- [X] Set up package structure
+    - [X] Controller
+    - [X] Entity
+    - [X] Dao/Persistence
+- [X] Configure dependencies
+    - [X] JPA/Hibernate
 
 3.) **Implement Core Entities**
-- [ ] Create Java classes
-    - [ ] Venue
-    - [ ] Cabinet
-    - [ ] Condition
-    - [ ] Manufacturer
-- [ ] Add annotations (@Entity, @Id, etc)
+- [X] Create Java classes
+    - [X] Venue
+    - [X] Cabinet
+    - [X] Condition
+    - [X] Manufacturer
+- [X] Add annotations (@Entity, @Id, etc)
 
 4.) **Build Basic CRUD Endpoints**
-- [ ] Venues
-    - [ ] GET /venues
-    - [ ] GET /venues/(id)
-    - [ ] POST /venues
-    - [ ] PUT /venues/(id)
-    - [ ] DELETE /venues/(id)
-- [ ] Cabinets
-    - [ ] GET /cabinets
-    - [ ] GET /cabinets/(id)
-    - [ ] POST /cabinets
-    - [ ] PUT /cabinets/(id)
-    - [ ] DELETE /cabinets/(id)
+- [X] Venues
+    - [X] GET /venues
+    - [X] GET /venues/(id)
+    - [X] POST /venues
+    - [X] PUT /venues/(id)
+    - [X] DELETE /venues/(id)
+- [X] Cabinets
+    - [X] GET /cabinets
+    - [X] GET /cabinets/(id)
+    - [X] POST /cabinets
+    - [X] PUT /cabinets/(id)
+    - [X] DELETE /cabinets/(id)
 
 5.) **Basic Testing**
 - [ ] Test endpoints using:

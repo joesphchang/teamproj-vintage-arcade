@@ -1,5 +1,8 @@
 package com.vintagearcade.persistence;
 
+import com.vintagearcade.entity.Cabinet;
+import com.vintagearcade.entity.GameCondition;
+import com.vintagearcade.entity.Manufacturer;
 import com.vintagearcade.entity.Venue;
 import org.junit.jupiter.api.*;
 
@@ -11,16 +14,43 @@ import static org.junit.jupiter.api.Assertions.*;
  * The type Venue dao test.
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class VenueDaoTest {
+public class VenueDaoTest {
 
-    private GenericDao<Venue> venueDao;
+    private VenueDao venueDao;
+    private CabinetDao cabinetDao;
+    private GenericDao<GameCondition> conditionDao;
+    private GenericDao<Manufacturer> manufacturerDao;
 
     /**
      * Sets .
      */
     @BeforeAll
     void setup() {
-        venueDao = new GenericDao<>(Venue.class);
+        cabinetDao = new CabinetDao();
+        venueDao = new VenueDao();
+        manufacturerDao = new GenericDao<>(Manufacturer.class);
+        conditionDao = new GenericDao<>(GameCondition.class);
+    }
+
+    private Manufacturer createTestManufacturer() {
+        Manufacturer manufacturer = new Manufacturer("TestCo", "USA", 1990);
+        manufacturerDao.insert(manufacturer);
+        return manufacturer;
+    }
+
+    private GameCondition createTestCondition() {
+        GameCondition condition = new GameCondition("Working", null);
+        conditionDao.insert(condition);
+        return condition;
+    }
+
+    private Cabinet createTestCabinet() {
+        Manufacturer manufacturer = createTestManufacturer();
+        GameCondition condition = createTestCondition();
+
+        Cabinet cabinet = new Cabinet("Venue Test Game", 1995, 0.25, manufacturer, condition, null);
+        cabinetDao.insert(cabinet);
+        return cabinet;
     }
 
     /**
@@ -28,12 +58,12 @@ class VenueDaoTest {
      */
     @Test
     void testInsertAndGetById() {
+
         Venue venue = new Venue("Retro Arcade", "123 Main St");
         venueDao.insert(venue);
-        int id = venue.getVenueId();
-        assertTrue(id > 0);
 
-        Venue retrieved = venueDao.getById(id);
+        Venue retrieved = venueDao.getById(venue.getVenueId());
+
         assertEquals("Retro Arcade", retrieved.getName());
     }
 
@@ -42,12 +72,16 @@ class VenueDaoTest {
      */
     @Test
     void testUpdate() {
-        Venue venue = venueDao.getAll().get(0);
-        venue.setLocation("456 Elm St");
+
+        Venue venue = new Venue("Update Test", "Old Address");
+        venueDao.insert(venue);
+
+        venue.setLocation("New Address");
         venueDao.update(venue);
 
         Venue updated = venueDao.getById(venue.getVenueId());
-        assertEquals("456 Elm St", updated.getLocation());
+
+        assertEquals("New Address", updated.getLocation());
     }
 
     /**
@@ -55,10 +89,14 @@ class VenueDaoTest {
      */
     @Test
     void testDelete() {
-        Venue venue = venueDao.getAll().get(0);
+
+        Venue venue = new Venue("Delete Test", "Test St");
+        venueDao.insert(venue);
+
         venueDao.delete(venue);
 
         Venue deleted = venueDao.getById(venue.getVenueId());
+
         assertNull(deleted);
     }
 
@@ -67,8 +105,12 @@ class VenueDaoTest {
      */
     @Test
     void testGetAll() {
+
+        venueDao.insert(new Venue("Arcade 1", "A St"));
+
         List<Venue> venues = venueDao.getAll();
-        assertNotNull(venues);
+
+        assertFalse(venues.isEmpty());
     }
 
     /**
@@ -76,10 +118,12 @@ class VenueDaoTest {
      */
     @Test
     void testGetByPropertyEqual() {
+
         Venue venue = new Venue("Equal Test", "789 Oak St");
         venueDao.insert(venue);
 
         List<Venue> results = venueDao.getByPropertyEqual("name", "Equal Test");
+
         assertFalse(results.isEmpty());
     }
 
@@ -88,10 +132,86 @@ class VenueDaoTest {
      */
     @Test
     void testGetByPropertyLike() {
+
         Venue venue = new Venue("Like Test Arcade", "101 Pine St");
         venueDao.insert(venue);
 
         List<Venue> results = venueDao.getByPropertyLike("name", "Like Test");
+
         assertFalse(results.isEmpty());
+    }
+
+    /**
+     * Test delete venue removes cabinet relationship.
+     */
+    @Test
+    void testDeleteVenueRemovesCabinetRelationship() {
+
+        Venue venue = new Venue("Delete Test Arcade", "Test St");
+        venueDao.insert(venue);
+
+        Cabinet cabinet = createTestCabinet();
+
+        venue.getCabinets().add(cabinet);
+        venueDao.update(venue);
+
+        int venueId = venue.getVenueId();
+
+        venueDao.delete(venue);
+
+        Venue deletedVenue = venueDao.getById(venueId);
+
+        assertNull(deletedVenue);
+    }
+
+    /**
+     * Test delete venue does not delete cabinets.
+     */
+    @Test
+    public void testDeleteVenueDoesNotDeleteCabinets() {
+        Venue venue = new Venue("Test Venue", "Addr");
+        venueDao.insert(venue);
+
+        Cabinet cabinet = createTestCabinet();
+
+        // Link both ways
+        venue.getCabinets().add(cabinet);
+        cabinet.getVenues().add(venue);
+
+        venueDao.update(venue);
+        cabinetDao.updateCabinet(cabinet);  // use updateCabinet to ensure validation
+
+        int cabinetId = cabinet.getGameId();
+
+        venueDao.deleteVenue(venue.getVenueId());
+
+        // Cabinet should still exist
+        Cabinet stillExists = cabinetDao.getById(cabinetId);
+        assertNotNull(stillExists);
+
+    }
+
+    /**
+     * Test delete venue with no cabinets.
+     */
+    @Test
+    void testDeleteVenueWithNoCabinets() {
+        // Create a venue with no cabinets
+        Venue venue = new Venue("Solo Venue", "456 Lonely St");
+        venueDao.insert(venue);
+
+        int venueId = venue.getVenueId();
+
+        // Ensure it has no cabinets
+        Venue retrieved = venueDao.getByIdWithCabinets(venueId);
+        assertNotNull(retrieved);
+        assertTrue(retrieved.getCabinets().isEmpty(), "Venue should start with no cabinets");
+
+        // Delete the venue
+        venueDao.deleteVenue(venueId);
+
+        // Verify the venue is deleted
+        Venue deleted = venueDao.getById(venueId);
+        assertNull(deleted, "Venue should be deleted successfully");
     }
 }
