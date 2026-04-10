@@ -30,6 +30,13 @@ public class Manufacturer {
      */
     public Manufacturer() {}
 
+    /**
+     * Instantiates a new Manufacturer.
+     *
+     * @param name        the name
+     * @param country     the country
+     * @param foundedYear the founded year
+     */
     public Manufacturer(String name, String country, int foundedYear) {
         this.name = name;
         this.country = country;
@@ -37,6 +44,7 @@ public class Manufacturer {
     }
 
     // getters and setters
+
     /**
      * Gets manufacturer id.
      *

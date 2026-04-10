@@ -17,6 +17,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * The type Venue servlet.
+ */
 @WebServlet("/venues")
 public class VenueServlet extends HttpServlet {
 

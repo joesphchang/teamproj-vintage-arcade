@@ -15,6 +15,9 @@ import java.util.List;
 import java.io.IOException;
 import java.lang.IllegalAccessException;
 
+/**
+ * The type Cabinet servlet.
+ */
 @WebServlet("/cabinets")
 public class CabinetServlet extends HttpServlet {
 

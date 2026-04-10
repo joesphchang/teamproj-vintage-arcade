@@ -44,6 +44,16 @@ public class Cabinet {
      */
     public Cabinet() {}
 
+    /**
+     * Instantiates a new Cabinet.
+     *
+     * @param gameName     the game name
+     * @param year         the year
+     * @param pricePerPlay the price per play
+     * @param manufacturer the manufacturer
+     * @param condition    the condition
+     * @param venues       the venues
+     */
     public Cabinet(String gameName, int year, double pricePerPlay, Manufacturer manufacturer, GameCondition condition, Set<Venue> venues) {
         this.gameName = gameName;
         this.year = year;

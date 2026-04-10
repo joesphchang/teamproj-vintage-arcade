@@ -39,6 +39,12 @@ public class Venue {
     public Venue() {}
 
 
+    /**
+     * Instantiates a new Venue.
+     *
+     * @param name     the name
+     * @param location the location
+     */
     public Venue(String name, String location) {
         this.name = name;
         this.location = location;
