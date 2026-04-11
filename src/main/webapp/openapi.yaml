@@ -1,0 +1,106 @@
+openapi: 3.0.3
+info:
+    title: Vintage Arcade Finder API
+    description: API for discovering and managing arcade venues and cabinets
+    version: 1.0.0
+
+servers:
+  - url: "http://localhost:8080/teamproj_vintage_arcade_war_exploded"
+
+paths:
+    /venues:
+        get:
+            summary: Get all venues
+            description: Retrieve a list of all arcade venues
+            responses:
+                '200':
+                    description: Successful response
+                    content:
+                        application/json:
+                            example:
+                              - venueId: 1
+                                name: Retro Arcade
+                                location: Madison, WI
+                                openFrom: "10:00"
+                                openTo: "22:00"
+
+        post:
+            summary: Add a new venue
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Venue"
+                        example:
+                            name: Retro Arcade
+                            location: Madison, WI
+                            openFrom: "10:00"
+                            openTo: "22:00"
+            responses:
+                '201':
+                    description: Venue created
+
+    /venues/{id}:
+        get:
+            summary: Get venue by ID
+            parameters:
+              -  name: id
+                 in: path
+                 required: true
+                 schema:
+                     type: integer
+            responses:
+                '200':
+                    description: Venue found
+                '404':
+                    description: Venue not found
+
+    /cabinets:
+        get:
+            summary: Search cabinets
+            parameters:
+              - name: manufacturer
+                in: query
+                schema:
+                    type: string
+              - name: year
+                in: query
+                schema:
+                    type: integer
+            responses:
+                '200':
+                    description: Filtered results
+
+
+components:
+    schemas:
+        Venue:
+            type: object
+            properties:
+                venueId:
+                    type: integer
+                name:
+                    type: string
+                location:
+                    type: string
+                openFrom:
+                    type: string
+                    example: "10:00"
+                openTo:
+                    type: string
+                    example: "22:00"
+
+        Cabinet:
+            type: object
+            properties:
+                gameId:
+                    type: integer
+                gameName:
+                    type: string
+                manufacturer:
+                    type: string
+                year:
+                    type: integer
+                pricePerPlay:
+                    type: number
