@@ -1,5 +1,6 @@
 package com.vintagearcade.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalTime;
 import java.util.HashSet;
@@ -39,6 +40,12 @@ public class Venue {
     public Venue() {}
 
 
+    /**
+     * Instantiates a new Venue.
+     *
+     * @param name     the name
+     * @param location the location
+     */
     public Venue(String name, String location) {
         this.name = name;
         this.location = location;
@@ -144,6 +151,7 @@ public class Venue {
      *
      * @return the cabinets
      */
+    @JsonIgnore
     public Set<Cabinet> getCabinets() {
         return cabinets;
     }

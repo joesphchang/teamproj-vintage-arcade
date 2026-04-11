@@ -1,5 +1,6 @@
 package com.vintagearcade.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -30,6 +31,13 @@ public class Manufacturer {
      */
     public Manufacturer() {}
 
+    /**
+     * Instantiates a new Manufacturer.
+     *
+     * @param name        the name
+     * @param country     the country
+     * @param foundedYear the founded year
+     */
     public Manufacturer(String name, String country, int foundedYear) {
         this.name = name;
         this.country = country;
@@ -37,6 +45,7 @@ public class Manufacturer {
     }
 
     // getters and setters
+
     /**
      * Gets manufacturer id.
      *
@@ -96,6 +105,7 @@ public class Manufacturer {
      *
      * @return the cabinets
      */
+    @JsonIgnore
     public Set<Cabinet> getCabinets() {
         return cabinets;
     }

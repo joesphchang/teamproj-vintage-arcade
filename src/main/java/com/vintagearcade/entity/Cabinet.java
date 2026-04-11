@@ -1,5 +1,6 @@
 package com.vintagearcade.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -44,6 +45,16 @@ public class Cabinet {
      */
     public Cabinet() {}
 
+    /**
+     * Instantiates a new Cabinet.
+     *
+     * @param gameName     the game name
+     * @param year         the year
+     * @param pricePerPlay the price per play
+     * @param manufacturer the manufacturer
+     * @param condition    the condition
+     * @param venues       the venues
+     */
     public Cabinet(String gameName, int year, double pricePerPlay, Manufacturer manufacturer, GameCondition condition, Set<Venue> venues) {
         this.gameName = gameName;
         this.year = year;
@@ -168,6 +179,7 @@ public class Cabinet {
      *
      * @return the venues
      */
+    @JsonIgnore
     public Set<Venue> getVenues() {
         return venues;
     }
