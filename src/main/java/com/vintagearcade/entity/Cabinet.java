@@ -1,5 +1,6 @@
 package com.vintagearcade.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -178,6 +179,7 @@ public class Cabinet {
      *
      * @return the venues
      */
+    @JsonIgnore
     public Set<Venue> getVenues() {
         return venues;
     }

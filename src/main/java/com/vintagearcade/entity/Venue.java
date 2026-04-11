@@ -1,5 +1,6 @@
 package com.vintagearcade.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalTime;
 import java.util.HashSet;
@@ -150,6 +151,7 @@ public class Venue {
      *
      * @return the cabinets
      */
+    @JsonIgnore
     public Set<Cabinet> getCabinets() {
         return cabinets;
     }

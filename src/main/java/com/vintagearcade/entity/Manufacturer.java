@@ -1,5 +1,6 @@
 package com.vintagearcade.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -104,6 +105,7 @@ public class Manufacturer {
      *
      * @return the cabinets
      */
+    @JsonIgnore
     public Set<Cabinet> getCabinets() {
         return cabinets;
     }
