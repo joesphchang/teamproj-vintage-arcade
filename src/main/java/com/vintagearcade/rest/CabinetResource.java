@@ -96,13 +96,31 @@ public class CabinetResource {
     /**
      * Search cabinets response.
      *
-     * @param year the year
+     * @param year         the year
+     * @param manufacturer the manufacturer
+     * @param condition    the condition
      * @return the response
      */
     @GET
     @Path("/search")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response searchCabinets(@QueryParam("year") Integer year) {
+    public Response searchCabinets(
+            @QueryParam("year") Integer year,
+            @QueryParam("manufacturer") String manufacturer,
+            @QueryParam("condition") String condition) {
+
+        if (condition != null && year != null) {
+            return Response.status(200).entity(dao.getByNestedPropertyAndYear("condition", "status", condition, year)).build();
+        }
+        if (manufacturer != null && year != null) {
+            return Response.status(200).entity(dao.getByNestedPropertyAndYear("manufacturer", "name", manufacturer, year)).build();
+        }
+        if (manufacturer != null) {
+            return Response.status(200).entity(dao.getByNestedPropertyEqual("manufacturer", "name", manufacturer)).build();
+        }
+        if (condition != null) {
+            return Response.status(200).entity(dao.getByNestedPropertyEqual("condition", "status", condition)).build();
+        }
         if (year != null) {
             return Response.status(200).entity(dao.getByPropertyEqual("year", year)).build();
         }
