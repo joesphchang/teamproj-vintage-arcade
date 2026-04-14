@@ -137,4 +137,50 @@ public class GenericDao<T> {
         session.close();
         return list;
     }
+
+    /**
+     * Gets by nested property equal.
+     *
+     * @param join     the join
+     * @param property the property
+     * @param value    the value
+     * @return the by nested property equal
+     */
+    public List<T> getByNestedPropertyEqual(String join, String property, Object value) {
+        Session session = sessionFactory.openSession();
+        HibernateCriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<T> query = builder.createQuery(type);
+        Root<T> root = query.from(type);
+        query.select(root).where(builder.equal(root.get(join).get(property), value));
+        List<T> list = session.createSelectionQuery(query).getResultList();
+        session.close();
+        return list;
+    }
+
+    /**
+     * Gets by nested property and year.
+     *
+     * documentation found for adding multiple roots: https://docs.hibernate.org/orm/6.4/userguide/html_single/#roots
+     *
+     * @param join     the join
+     * @param property the property
+     * @param value    the value
+     * @param year     the year
+     * @return the by nested property and year
+     */
+    public List<T> getByNestedPropertyAndYear(String join, String property, Object value, int year) {
+        Session session = sessionFactory.openSession();
+        HibernateCriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<T> query = builder.createQuery(type);
+        Root<T> root = query.from(type);
+        query.select(root).where(
+                builder.and(
+                        builder.equal(root.get(join).get(property), value),
+                        builder.equal(root.get("year"), year)
+                )
+        );
+        List<T> list = session.createSelectionQuery(query).getResultList();
+        session.close();
+        return list;
+    }
 }
