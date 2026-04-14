@@ -18,7 +18,22 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * The type Venue servlet.
+ * Servlet responsible for handling HTTP requests related to {@link Venue} resources.
+ *
+ * <p>This servlet provides REST-like operations for managing arcade venues,
+ * including retrieving, creating, updating, and deleting venues.</p>
+ *
+ * <p>Each venue may contain multiple {@link Cabinet} objects.</p>
+ *
+ * <p>Supported operations:</p>
+ * <ul>
+ *     <li>GET - Retrieve one or all venues</li>
+ *     <li>POST - Create a new venue</li>
+ *     <li>PUT - Update an existing venue</li>
+ *     <li>DELETE - Remove a venue</li>
+ * </ul>
+ *
+ * <p>All responses are returned in JSON format.</p>
  */
 @WebServlet("/venues")
 public class VenueServlet extends HttpServlet {
@@ -28,7 +43,16 @@ public class VenueServlet extends HttpServlet {
     private GenericDao<Venue> venueDao = new GenericDao<>(Venue.class);
     private ObjectMapper mapper = new ObjectMapper();
 
-    // GET
+    /**
+     * Handles HTTP GET requests.
+     *
+     * <p>If an "id" parameter is provided, returns a specific venue.
+     * Otherwise, returns a list of all venues.</p>
+     *
+     * @param request  the {@link HttpServletRequest} containing client request data
+     * @param response the {@link HttpServletResponse} used to return JSON output
+     * @throws IOException if an input or output error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
@@ -63,7 +87,15 @@ public class VenueServlet extends HttpServlet {
 
     }
 
-    // POST
+    /**
+     * Handles HTTP POST requests.
+     *
+     * <p>Creates a new {@link Venue} from the JSON request body.</p>
+     *
+     * @param request  the HTTP request containing venue data in JSON format
+     * @param response the HTTP response used to return status and errors
+     * @throws IOException if an input or output error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
@@ -87,7 +119,15 @@ public class VenueServlet extends HttpServlet {
         }
     }
 
-    // PUT
+    /**
+     * Handles HTTP PUT requests.
+     *
+     * <p>Updates an existing {@link Venue} using the provided ID and JSON body.</p>
+     *
+     * @param request  the HTTP request containing updated venue data
+     * @param response the HTTP response used to return status and errors
+     * @throws IOException if an input or output error occurs
+     */
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
@@ -126,7 +166,15 @@ public class VenueServlet extends HttpServlet {
 
     }
 
-    // DELETE
+    /**
+     * Handles HTTP DELETE requests.
+     *
+     * <p>Deletes a {@link Venue} based on the provided ID.</p>
+     *
+     * @param request  the HTTP request containing the venue ID
+     * @param response the HTTP response used to return status and errors
+     * @throws IOException if an input or output error occurs
+     */
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
@@ -155,7 +203,21 @@ public class VenueServlet extends HttpServlet {
 
     }
 
-    // Validation method
+    /**
+     * Validates the fields of a {@link Venue} object before persistence.
+     *
+     * <p>Validation rules include:</p>
+     * <ul>
+     *     <li>Venue name must not be null or blank</li>
+     *     <li>Location must not be null or blank</li>
+     *     <li>Opening time must be provided</li>
+     *     <li>Closing time must be provided</li>
+     *     <li>Opening time must be before closing time</li>
+     * </ul>
+     *
+     * @param venue the venue object to validate
+     * @throws IllegalAccessException if validation fails
+     */
     private void validateVenue(Venue venue) throws IllegalAccessException {
 
         // check if a venue's name was input
