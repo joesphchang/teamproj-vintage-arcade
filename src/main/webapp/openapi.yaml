@@ -1,106 +1,295 @@
 openapi: 3.0.3
 info:
-    title: Vintage Arcade Finder API
-    description: API for discovering and managing arcade venues and cabinets
-    version: 1.0.0
+  title: Vintage Arcade Finder API
+  description: API for discovering and managing arcade venues and cabinets
+  version: 1.0.0
 
 servers:
-  - url: "http://localhost:8080/teamproj_vintage_arcade_war_exploded"
+  - url: http://localhost:8080/teamproj_vintage_arcade_war_exploded
 
 paths:
-    /venues:
-        get:
-            summary: Get all venues
-            description: Retrieve a list of all arcade venues
-            responses:
-                '200':
-                    description: Successful response
-                    content:
-                        application/json:
-                            example:
-                              - venueId: 1
-                                name: Retro Arcade
-                                location: Madison, WI
-                                openFrom: "10:00"
-                                openTo: "22:00"
 
-        post:
-            summary: Add a new venue
-            requestBody:
-                required: true
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/Venue"
-                        example:
-                            name: Retro Arcade
-                            location: Madison, WI
-                            openFrom: "10:00"
-                            openTo: "22:00"
-            responses:
-                '201':
-                    description: Venue created
+  /venues:
+    get:
+      summary: Get all venues
+      description: Retrieve a list of all arcade venues (optionally filter by location)
+      parameters:
+        - name: location
+          in: query
+          schema:
+            type: string
+          description: Filter venues by city/location
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Venue'
 
-    /venues/{id}:
-        get:
-            summary: Get venue by ID
-            parameters:
-              -  name: id
-                 in: path
-                 required: true
-                 schema:
-                     type: integer
-            responses:
-                '200':
-                    description: Venue found
-                '404':
-                    description: Venue not found
+    post:
+      summary: Add a new venue (admin only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VenueInput'
+      responses:
+        '201':
+          description: Venue created
 
-    /cabinets:
-        get:
-            summary: Search cabinets
-            parameters:
-              - name: manufacturer
-                in: query
-                schema:
-                    type: string
-              - name: year
-                in: query
-                schema:
-                    type: integer
-            responses:
-                '200':
-                    description: Filtered results
+  /venues/{id}:
+    get:
+      summary: Get venue by ID
+      description: Retrieve a specific venue including its cabinets
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Venue found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Venue'
+        '404':
+          description: Venue not found
+
+    put:
+      summary: Update venue (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VenueInput'
+      responses:
+        '200':
+          description: Venue updated
+        '404':
+          description: Venue not found
+
+    delete:
+      summary: Delete venue (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Venue deleted
+        '404':
+          description: Venue not found
+
+  /cabinets:
+    get:
+      summary: Get all cabinets
+      description: Retrieve and filter arcade cabinets
+      parameters:
+        - name: manufacturer
+          in: query
+          schema:
+            type: string
+        - name: year
+          in: query
+          schema:
+            type: integer
+        - name: condition
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Filtered results
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cabinet'
+
+    post:
+      summary: Add a new cabinet (admin only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CabinetInput'
+      responses:
+        '201':
+          description: Cabinet created
+
+  /cabinets/{id}:
+    get:
+      summary: Get cabinet by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Cabinet found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cabinet'
+        '404':
+          description: Cabinet not found
+
+    put:
+      summary: Update cabinet (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CabinetInput'
+      responses:
+        '200':
+          description: Cabinet updated
+        '404':
+          description: Cabinet not found
+
+    delete:
+      summary: Delete cabinet (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Cabinet deleted
+        '404':
+          description: Cabinet not found
 
 
 components:
-    schemas:
-        Venue:
-            type: object
-            properties:
-                venueId:
-                    type: integer
-                name:
-                    type: string
-                location:
-                    type: string
-                openFrom:
-                    type: string
-                    example: "10:00"
-                openTo:
-                    type: string
-                    example: "22:00"
 
-        Cabinet:
-            type: object
-            properties:
-                gameId:
-                    type: integer
-                gameName:
-                    type: string
-                manufacturer:
-                    type: string
-                year:
-                    type: integer
-                pricePerPlay:
-                    type: number
+  schemas:
+
+    Venue:
+      type: object
+      properties:
+        venueId:
+          type: integer
+        name:
+          type: string
+        location:
+          type: string
+        openFrom:
+          type: string
+          example: "10:00"
+        openTo:
+          type: string
+          example: "22:00"
+        cabinets:
+          type: array
+          items:
+            $ref: '#/components/schemas/Cabinet'
+
+    VenueInput:
+      type: object
+      required:
+        - name
+        - location
+        - openFrom
+        - openTo
+      properties:
+        name:
+          type: string
+        location:
+          type: string
+        openFrom:
+          type: string
+        openTo:
+          type: string
+
+    Cabinet:
+      type: object
+      properties:
+        gameId:
+          type: integer
+        gameName:
+          type: string
+        manufacturer:
+          type: string
+        year:
+          type: integer
+        pricePerPlay:
+          type: number
+        venueId:
+          type: integer
+        condition:
+          $ref: '#/components/schemas/Condition'
+        manufacturerDetails:
+          $ref: '#/components/schemas/Manufacturer'
+
+    CabinetInput:
+      type: object
+      required:
+        - gameName
+        - year
+        - pricePerPlay
+        - venueId
+        - conditionId
+      properties:
+        gameName:
+          type: string
+        manufacturer:
+          type: string
+        year:
+          type: integer
+        pricePerPlay:
+          type: number
+        venueId:
+          type: integer
+        conditionId:
+          type: integer
+        manufacturerId:
+          type: integer
+
+    Condition:
+      type: object
+      properties:
+        conditionId:
+          type: integer
+        status:
+          type: string
+          example: Excellent
+
+    Manufacturer:
+      type: object
+      properties:
+        manufacturerId:
+          type: integer
+        name:
+          type: string
+        country:
+          type: string
+        foundedYear:
+          type: integer
