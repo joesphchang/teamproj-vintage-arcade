@@ -146,4 +146,3 @@ GET /cabinets?condition=Excellent&year=1985 – Get cabinets in excellent condit
 
 --- 
 
-## Curl List
