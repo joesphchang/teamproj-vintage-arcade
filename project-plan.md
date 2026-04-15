@@ -68,102 +68,102 @@
     - [X] DELETE /cabinets/(id)
 
 5.) **Basic Testing**
-- [ ] Test endpoints using:
-    - [ ] Postman or similar
-- [ ] Verify CRUD functionality
+- [X] Test endpoints using:
+    - [X] Postman or similar
+- [X] Verify CRUD functionality
 
 ---
 
 ## Week 11 [Third Week]:
 
 1.) **Implement Filtering & Search**
-- [ ] GET /venues/?location=…
-- [ ] GET /venues/?openNow=true
-- [ ] GET /cabinets?manufacturer=…
-- [ ] GET /cabinets?year=…
-- [ ] GET /cabinets/condition=…
+- [X] GET /venues/?location=…
+- [X] GET /venues/?openNow=true
+- [X] GET /cabinets?manufacturer=…
+- [X] GET /cabinets?year=…
+- [X] GET /cabinets/condition=…
 
 2.) **Data Validation & Error Handling**
-- [ ] Validate inputs
-    - [ ] Required fields
-    - [ ] Proper formats (time, price)
-- [ ] Add
-    - [ ] 400 (Bad Request)
-    - [ ] 404 (Not Found)
-    - [ ] 500 (Server Error)
-- [ ] Create global exception handler
+- [X] Validate inputs
+    - [X] Required fields
+    - [X] Proper formats (time, price)
+- [X] Add
+    - [X] 400 (Bad Request)
+    - [X] 404 (Not Found)
+    - [X] 500 (Server Error)
+- [X] Create global exception handler
 
 3.) **Business Logic Improvements**
-- [ ] Cascade delete
-    - [ ] Deleting a venue removes its cabinets
-- [ ] Prevent invalid updates
-    - [ ] Cabinet must belong to a valid venue
-- [ ] Prevent duplicate entries?
+- [X] Cascade delete
+    - [X] Deleting a venue removes its cabinets
+- [X] Prevent invalid updates
+    - [X] Cabinet must belong to a valid venue
+- [X] Prevent duplicate entries?
 
 4.) **Add Manufacturer Support**
-- [ ] Manufacturer entity
-- [ ] Link to Cabinet
-- [ ] Add filtering
-    - [ ] ?manufacturer=Atari
+- [X] Manufacturer entity
+- [X] Link to Cabinet
+- [X] Add filtering
+    - [X] ?manufacturer=Atari
 
 5.) **Unit & Integration Testing**
-- [ ] Write tests
-    - [ ] Dao
-- [ ] Ensure good coverage
+- [X] Write tests
+    - [X] Dao
+- [X] Ensure good coverage
 
 6.) **Documentation**
-- [ ] API endpoint documentation
-- [ ] Example requests/responses
+- [X] API endpoint documentation
+- [X] Example requests/responses
 
 ---
 
 ## Week 12 [Fourth Week] - PROJECT DUE WEDNESDAY 4/15/26 BY 9PM:
 
 1.) **Final Testing & Debugging**
-- [ ] Test all endpoints thoroughly
-- [ ] Fix bugs
-- [ ] Edge cases
-    - [ ] Empty results
-    - [ ] Invalid IDs
-    - [ ] Deleting linked data
+- [X] Test all endpoints thoroughly
+- [X] Fix bugs
+- [X] Edge cases
+    - [X] Empty results
+    - [X] Invalid IDs
+    - [X] Deleting linked data
 
 2.) **Complete documentation**
-- [ ] User-facing documentation
-    - [ ] What the API does
-    - [ ] How to use endpoints
-- [ ] Developer documentation
-    - [ ] Endpoint list
-    - [ ] Parameters
-    - [ ] Sample JSON
+- [X] User-facing documentation
+    - [X] What the API does
+    - [X] How to use endpoints
+- [X] Developer documentation
+    - [X] Endpoint list
+    - [X] Parameters
+    - [X] Sample JSON
 
 3.) **JavaDoc & Code Cleanup**
-- [ ] Add JavaDoc
-    - [ ] Classes
-    - [ ] Methods
-- [ ] Refactor if necessary
-    - [ ] Improve readability
-    - [ ] Remove unused code
+- [X] Add JavaDoc
+    - [X] Classes
+    - [X] Methods
+- [X] Refactor if necessary
+    - [X] Improve readability
+    - [X] Remove unused code
 
 4.) **Deploy API**
-- [ ] Note: Will we deploy via AWS or local?
-- [ ] Ensure:
-    - [ ] Public endpoint works
-    - [ ] API accessible
+- [X] Note: Will we deploy via AWS or local?
+- [X] Ensure:
+    - [X] Public endpoint works
+    - [X] API accessible
 
 5.) **GitHub finalization**
-- [ ] Clean repo structure if needed
-- [ ] Ensure commit history shows contributions
+- [X] Clean repo structure if needed
+- [X] Ensure commit history shows contributions
 
 6.) **Presentation Prep**
-- [ ] Create slides/demo
-    - [ ] Problem
-    - [ ] Solution
-    - [ ] Architecture
-    - [ ] Recorded demo
-- [ ] Assign presentation roles
-    - [ ] Practice timing for presentation
+- [X] Create presentation/demo
+    - [X] Problem
+    - [X] Solution
+    - [X] Architecture
+    - [X] Live demo
+- [X] Assign presentation roles
+    - [X] Practice timing for presentation
 
 7.) **Team Deliverables**
-- [ ] Finalize team log/journal
-- [ ] Contributions summary
-- [ ] Final check over
+- [X] Finalize team log/journal
+- [X] Contributions summary
+- [X] Final check over
